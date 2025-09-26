@@ -1,9 +1,12 @@
 package com.QuizeApplication.quize.dto;
 
+import jakarta.validation.constraints.Size;
+
 public class QuizSubmitRequestDTO {
 
     private String questionId;
     private String selected;
+    @Size(max = 200, message = "Max 200 chars are allows")
     private String text;
 
     public String getQuestionId() {

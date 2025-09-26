@@ -113,13 +113,15 @@ public class QuizeControllerService {
             if(answer.getSelected()==null){
                 answer.setSelected("");
             }
-            if(question.get().getQuestionType().equalsIgnoreCase("descriptive")){
-                continue;
-            }
             // checks if questin found or not
             if(question.isEmpty()){
                 throw new SQLException("No question with Id "+answer.getQuestionId());
             }
+
+            if(question.get().getQuestionType().equalsIgnoreCase("descriptive")){
+                continue;
+            }
+
 
             /// if the options of user and correct option of DB matches count is increased
             if(answer.getSelected().trim().equalsIgnoreCase(question.get().getCorrectOption().trim())){
