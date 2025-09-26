@@ -1,6 +1,8 @@
 package com.QuizeApplication.quize.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.util.UUID;
@@ -8,7 +10,9 @@ import java.util.UUID;
 @Entity
 public class QuizQuestions {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+    private UUID quizeId;
     private int questionNo;
     private String questionType;
     private String mcsOptions;
@@ -28,6 +32,10 @@ public class QuizQuestions {
 
     public void setQuizeId(int questionNo) {
         this.questionNo = questionNo;
+    }
+
+    public void setQuizeId(UUID quizeId) {
+        this.quizeId = quizeId;
     }
 
     public String getQuestionType() {
