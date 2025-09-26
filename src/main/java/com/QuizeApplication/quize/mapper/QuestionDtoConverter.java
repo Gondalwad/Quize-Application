@@ -1,18 +1,20 @@
 package com.QuizeApplication.quize.mapper;
 
 import com.QuizeApplication.quize.dto.AddQuestionsDTO;
+import com.QuizeApplication.quize.dto.QuizQuestionResponse;
 import com.QuizeApplication.quize.exception.InvalidQuestionException;
 import com.QuizeApplication.quize.model.QuizQuestions;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 @Component
-public class QuestionDtoToQuizQuestions {
+public class QuestionDtoConverter {
     
-    public List<QuizQuestions> maptoList(String id,List<AddQuestionsDTO> dto){
+    public List<QuizQuestions> maptoQuizQuestionsList(String id, List<AddQuestionsDTO> dto){
 
         List<QuizQuestions> questions = new ArrayList<>();
 
@@ -47,5 +49,36 @@ public class QuestionDtoToQuizQuestions {
         }
 
         return questions;
+    }
+
+    /// method to convert quizQuestion to QuizQuestionResponse
+    public List<QuizQuestionResponse> maptoQuizeQuestinResponseDTOList(List<QuizQuestions> questions){
+        List<QuizQuestionResponse> dto = new ArrayList<>();
+
+        for(QuizQuestions q : questions){
+            QuizQuestionResponse current = new QuizQuestionResponse();
+
+            if(q.getQuestionType().equalsIgnoreCase("mcq")){
+                HashMap<String,String> options = new HashMap<>();
+
+                /// below is loop which makes the string options to hashMap
+                int i = 0; /// jsut to act as counter
+                for(String s : q.getMcqOptions().split("%%%")){
+                    i++;
+                    options.put("Option"+i, s);
+                }
+                current.setMcqOptions(options);
+            }
+
+            current.setQuestionNo(q.getQuestionNo());
+            current.setQuestionId(q.getId().toString());
+            current.setQuestionType(q.getQuestionType());
+            current.setQuizId(q.getQuizId().toString());
+            current.setQuestion(q.getQuestionText());
+
+            dto.add(current);
+        }
+
+        return dto;
     }
 }
