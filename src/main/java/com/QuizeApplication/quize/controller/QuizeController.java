@@ -1,13 +1,19 @@
 package com.QuizeApplication.quize.controller;
 
 import com.QuizeApplication.quize.dto.CreateQuizeDTO;
+import com.QuizeApplication.quize.model.Quizzes;
 import com.QuizeApplication.quize.service.QuizeControllerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class QuizeController {
@@ -29,5 +35,11 @@ public class QuizeController {
 
         /// return status 200 if quiz is created
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Quizzes>> getAllquizzes(){
+
+        return ResponseEntity.ok().body(controllerService.getAllQuizzes());
     }
 }
